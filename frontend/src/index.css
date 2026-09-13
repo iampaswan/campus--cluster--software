@@ -1,3 +1,25 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Chat List Scrollbar */
+.custom-scrollbar-chatlist::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar-chatlist::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar-chatlist::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar-chatlist:hover::-webkit-scrollbar-thumb {
+  background: #52525b;
+}
+
+.custom-scrollbar-chatlist:hover::-webkit-scrollbar-thumb:hover {
+  background: #71717a;
+}

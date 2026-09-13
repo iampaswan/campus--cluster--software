@@ -2,7 +2,7 @@
 
 export default function Dashboard() {
   return (
-    <div className="h-full w-full bg-gray-100 dark:bg-gray-900 dark:text-white">
+    <div className="">
       Welcome
     </div>
   );
