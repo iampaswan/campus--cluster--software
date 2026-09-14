@@ -33,7 +33,6 @@ app.use((req, res, next) => {
 });
 
 // connectDB()
-connectPostgress()
 AppDataSource.initialize()
 
 app.use('/auth', router)

@@ -8,6 +8,8 @@ import { User } from '../entities/user-entity';
 import { AppDataSource } from '../configuration/data-source';
 import { AuthenticatedRequest } from '../middleware/auth';
 
+const userRepository = AppDataSource.getRepository(User);
+
 
 export const refresh = (req: Request, res: Response) => {
   const { refreshToken } = req.body;
@@ -45,13 +47,11 @@ export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
 
-    // check existing user
-    const existingUser = await pool.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email]
-    );
+    const existingUser = await userRepository.findOne({
+      where: { email },
+    });
 
-    if (existingUser.rows.length > 0) {
+    if (existingUser) {
       return res.status(400).json({
         message:
           "User already exists. Please login instead.",
@@ -64,17 +64,16 @@ export const register = async (req: Request, res: Response) => {
       10
     );
 
-    // create user
-    const newUser = await pool.query(
-      `
-      INSERT INTO users (name, email, password)
-      VALUES ($1, $2, $3)
-      RETURNING id, name, email
-      `,
-      [name, email, hashedPassword]
-    );
+    const user = userRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+      googleId: null,
+      profileUrl: null,
+      authProvider: 'local',
+    });
 
-    const user = newUser.rows[0];
+    await userRepository.save(user);
 
     // jwt payload
     const payload = {
@@ -111,21 +110,22 @@ export const login = async (
   try {
     const { email, password } = req.body;
 
-    // find user
-    const result = await pool.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email]
-    );
+    const loginUser = await userRepository.findOne({
+      where: { email },
+    });
 
-    if (result.rows.length === 0) {
+    if (!loginUser) {
       return res.status(400).json({
         message: "User not found",
       });
     }
 
-    const loginUser = result.rows[0];
+    if (!loginUser.password) {
+      return res.status(401).json({
+        message: "Please sign in with Google",
+      });
+    }
 
-    // compare password
     const validPassword = await bcrypt.compare(
       password,
       loginUser.password

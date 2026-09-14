@@ -6,6 +6,17 @@ const PORT = process.env.PORT
 import { AppDataSource } from "./configuration/data-source";
 import cookieParser from "cookie-parser";
 
+import courseRouter from "./routes/courseRoute";
+
+import "dotenv/config";
+import { configDotenv } from "dotenv";
+
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+
+
 const app = express();
 
 
@@ -31,7 +42,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.use('/course',)
+app.use('/course', courseRouter)
 
 
 

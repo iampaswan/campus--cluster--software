@@ -9,6 +9,9 @@ import AuthPage from "../components/authentication/authPage";
 import OAuthSuccess from "../components/pages/Oauth";
 import Users from "../pages/auth.pages/users.page";
 
+import Courses from "../pages/course.pages/CourseMainPage";
+import CreateCourse from "../pages/course.pages/CreateCourseForm";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -24,6 +27,9 @@ export default function AppRoutes() {
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
+
+          <Route path="/my-courses" element={<Courses />} />
+          <Route path="/courses/create" element={<CreateCourse />} />
         </Route>
       </Route>
 

@@ -5,7 +5,6 @@ import {
   CopyIcon,
   CopyPlusIcon,
   Building2Icon,
-  HousePlusIcon,
   LucideHousePlus,
   UserIcon,
   MessageCircle,
@@ -26,8 +25,8 @@ import { getMe } from "../../configuration/authConfiguration";
 const links = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { name: "Users", path: "/users", icon: Users },
-  { name: "Explore Courses", path: "/courses", icon: CopyIcon },
-  { name: "Create Course", path: "/create-course", icon: CopyPlusIcon },
+  { name: "Explore Courses", path: "/explore-courses", icon: CopyIcon },
+  { name: "Courses", path: "/my-courses", icon: CopyPlusIcon },
   { name: "Explore Campus", path: "/campuse", icon: Building2Icon },
   { name: "Create Campus", path: "/create-campuse", icon: LucideHousePlus },
 
