@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 const publicKey = process.env.JWT_PUBLIC_KEY
 
 import { User } from '../entities/user-entity';
-import pool from '../configuration/postgresConfig';
 import { AppDataSource } from '../configuration/data-source';
 import { AuthenticatedRequest } from '../middleware/auth';
 

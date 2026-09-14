@@ -10,7 +10,7 @@ const privateKey = process.env.JWT_PRIVATE_KEY!.replace(/\\n/g, '\n');
 export const generateAccessToken = (payload: Record<string, any>) => {
    return jwt.sign(payload, privateKey, {
       algorithm: "RS256",
-      expiresIn: "24h",
+      expiresIn: "1h",
    });
 };
 

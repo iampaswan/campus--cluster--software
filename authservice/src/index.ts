@@ -7,7 +7,6 @@ import { AppDataSource } from './configuration/data-source';
 
 const PORT = process.env.PORT
 
-import { connectPostgress } from './configuration/postgresConfig';
 import "./configuration/passport";
 
 const app = express();

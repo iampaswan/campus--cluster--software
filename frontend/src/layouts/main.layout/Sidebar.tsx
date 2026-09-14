@@ -1,8 +1,13 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-  UserIcon,
   LayoutDashboard,
   Users,
+  CopyIcon,
+  CopyPlusIcon,
+  Building2Icon,
+  HousePlusIcon,
+  LucideHousePlus,
+  UserIcon,
   MessageCircle,
   // UsersRound,
   Settings,
@@ -20,8 +25,18 @@ import { getMe } from "../../configuration/authConfiguration";
 
 const links = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-  { name: "Connections", path: "/users", icon: Users },
+  { name: "Users", path: "/users", icon: Users },
+  { name: "Explore Courses", path: "/courses", icon: CopyIcon },
+  { name: "Create Course", path: "/create-course", icon: CopyPlusIcon },
+  { name: "Explore Campus", path: "/campuse", icon: Building2Icon },
+  { name: "Create Campus", path: "/create-campuse", icon: LucideHousePlus },
+
+
+
+
   { name: "Messages", path: "/messages", icon: MessageCircle },
+
+
   // { name: "Groups", path: "/groups", icon: UsersRound },
   // { name: "Calls Logs", path: "/calls", icon: PhoneCall },
   // { name: "Community", path: "/community", icon: UserStarIcon },
@@ -101,7 +116,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
         </div>
 
         {/* Scrollable Navigation */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-1.5 pb-2 custom-scrollbar-sidebar">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-1.5 pb-2 scrollbar-hidden">
 
           <div className="flex flex-col gap-1">
             {links.map((link) => {
@@ -131,7 +146,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                         <Icon size={20} />
                       </div>
 
-                      <span className="truncate w-full">{link.name}</span>
+                      <span className="w-full px-0.5 text-[8px] leading-2.5 text-center wrap-break-words">{link.name}</span>
                     </>
                   )}
                 </NavLink>
