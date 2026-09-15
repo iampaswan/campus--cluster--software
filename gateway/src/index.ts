@@ -47,11 +47,11 @@ app.get('/auth/me', authenticateJWT, (req: Request, res: Response, next: NextFun
 
 
 const courseServiceProxy = proxy(COURSE_SERVICE_URL)
-app.post('/course/create-course', (req: Request, res: Response, next: NextFunction) => {
-  authServiceProxy(req, res, next)
+app.post('/course/create', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
+  courseServiceProxy(req, res, next)
 })
-app.get('/course/my-course', (req: Request, res: Response, next: NextFunction) => {
-  authServiceProxy(req, res, next)
+app.get('/course/my', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
+  courseServiceProxy(req, res, next)
 })
 
 

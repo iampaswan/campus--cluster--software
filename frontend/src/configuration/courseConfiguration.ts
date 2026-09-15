@@ -98,7 +98,7 @@ export const createCourse = (
   data: CreateCourseData
 ) => {
   return apiClient.post<CourseResponse>(
-    "/courses",
+    "/course/create",
     data
   );
 };
@@ -106,6 +106,6 @@ export const createCourse = (
 
 export const getMyCourses = () => {
   return apiClient.get<CoursesResponse>(
-    "/courses/my"
+    "/course/my"
   );
 };

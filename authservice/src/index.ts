@@ -32,9 +32,6 @@ app.use((req, res, next) => {
   return next();
 });
 
-// connectDB()
-AppDataSource.initialize()
-
 app.use('/auth', router)
 
 app.get("/", (req: Request, res: Response) => {
@@ -42,8 +39,19 @@ app.get("/", (req: Request, res: Response) => {
 
 })
 
-app.listen(PORT, () => {
-  console.log(`Authentication service started at port ${PORT}`)
-})
+const startServer = async () => {
+  try {
+    await AppDataSource.initialize();
+
+    app.listen(PORT, () => {
+      console.log(`Authentication service started at port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to initialize the database:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 

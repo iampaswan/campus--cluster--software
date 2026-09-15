@@ -6,8 +6,8 @@ import { createCourseController, getMyCoursesController } from "../controller/co
 
 const courseRouter = Router()
 
-courseRouter.post('/create-course', createCourseController)
-courseRouter.post('/my-course', getMyCoursesController)
+courseRouter.post('/create', createCourseController)
+courseRouter.get('/my', getMyCoursesController)
 
 
 export default courseRouter
