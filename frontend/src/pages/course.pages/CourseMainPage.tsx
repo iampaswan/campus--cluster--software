@@ -7,7 +7,7 @@ import {
   Loader2,
 } from "lucide-react";
 
-
+import Button from "../../components/user-interface/Button";
 
 import { getMyCourses, type Course } from "../../configuration/courseConfiguration";
 
@@ -39,48 +39,27 @@ const Courses = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
+    <div className="space-y-4">
 
       {/* Header */}
       <div className="mb-6 flex items-center justify-between gap-4">
 
         <div className="min-w-0">
-          <h1 className="truncate text-xl font-semibold text-gray-900 sm:text-2xl">
+          <h1 className="truncate text-lg font-semibold text-gray-900 sm:text-xl">
             My Courses
           </h1>
 
-          <p className="mt-1 hidden text-sm text-gray-500 sm:block">
-            Manage the courses you have created
-          </p>
         </div>
 
-        <button
-          type="button"
+
+        <Button
           onClick={() => navigate("/courses/create")}
-          className="
-            flex
-            shrink-0
-            items-center
-            justify-center
-            gap-2
-            rounded-lg
-            bg-black
-            p-2.5
-            text-sm
-            font-medium
-            text-white
-            transition
-            hover:bg-gray-800
-            sm:px-4
-            sm:py-2.5
-          "
+          size="sm"
+          variant="primary"
         >
           <Plus size={18} />
-
-          <span className="hidden sm:inline">
-            Create Course
-          </span>
-        </button>
+          Create
+        </Button>
 
       </div>
 

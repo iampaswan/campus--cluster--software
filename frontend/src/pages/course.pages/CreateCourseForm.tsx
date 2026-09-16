@@ -100,7 +100,7 @@ const CreateCourse = () => {
 
           <button
             type="button"
-            onClick={() => navigate("/courses")}
+            onClick={() => navigate(-1)}
             className="
               rounded-lg
               p-2
