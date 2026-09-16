@@ -16,7 +16,7 @@ export default function Button({
 }: ButtonProps) {
   const variants = {
     primary: "bg-blue-600 text-white hover:bg-blue-700",
-    secondary: "bg-gray-100 text-black hover:bg-gray-300 ",
+    secondary: "bg-gray-100 text-black hover:bg-gray-200 ",
     danger: "bg-red-600 text-white hover:bg-red-700",
     outline: "border border-gray-300 bg-white text-black hover:bg-gray-50",
   };
@@ -35,7 +35,7 @@ export default function Button({
         items-center
         justify-center
         gap-2
-        rounded-md
+        rounded-full
         font-medium
         transition
         disabled:cursor-not-allowed

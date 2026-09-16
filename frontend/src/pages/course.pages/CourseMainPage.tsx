@@ -45,7 +45,7 @@ const Courses = () => {
       <div className="mb-6 flex items-center justify-between gap-4">
 
         <div className="min-w-0">
-          <h1 className="truncate text-lg font-semibold text-gray-900 sm:text-xl">
+          <h1 className="truncate text-lg font-semibold text-gray-900 dark:text-white sm:text-xl">
             My Courses
           </h1>
 
@@ -57,7 +57,7 @@ const Courses = () => {
           size="sm"
           variant="primary"
         >
-          <Plus size={18} />
+          <Plus size={15} />
           Create
         </Button>
 
@@ -167,13 +167,13 @@ const Courses = () => {
         !error &&
         courses.length > 0 && (
           <div className="
-            grid
-            grid-cols-1
-            gap-5
-            sm:grid-cols-2
-            lg:grid-cols-3
-            xl:grid-cols-4
-          ">
+  grid
+  grid-cols-2
+  gap-3
+  sm:grid-cols-3
+  lg:grid-cols-4
+  xl:grid-cols-5
+">
 
             {courses.map((course) => (
               <div
@@ -182,41 +182,41 @@ const Courses = () => {
                   navigate(`/courses/${course.id}`)
                 }
                 className="
-                  cursor-pointer
-                  overflow-hidden
-                  rounded-xl
-                  border
-                  border-gray-200
-                  bg-white
-                  shadow-sm
-                  transition
-                  hover:-translate-y-0.5
-                  hover:shadow-md
-                "
+        cursor-pointer
+        overflow-hidden
+        rounded-lg
+        border
+        border-gray-200
+        bg-white
+        shadow-sm
+        transition
+        hover:-translate-y-0.5
+        hover:shadow-md
+      "
               >
 
                 {/* Thumbnail */}
-                <div className="h-40 bg-gray-100">
+                <div className="h-24 bg-gray-100">
 
                   {course.thumbnail ? (
                     <img
                       src={course.thumbnail}
                       alt={course.title}
                       className="
-                        h-full
-                        w-full
-                        object-cover
-                      "
+              h-full
+              w-full
+              object-cover
+            "
                     />
                   ) : (
                     <div className="
-                      flex
-                      h-full
-                      items-center
-                      justify-center
-                    ">
+            flex
+            h-full
+            items-center
+            justify-center
+          ">
                       <BookOpen
-                        size={36}
+                        size={20}
                         className="text-gray-400"
                       />
                     </div>
@@ -226,35 +226,35 @@ const Courses = () => {
 
 
                 {/* Content */}
-                <div className="p-4">
+                <div className="p-2.5">
 
                   <div className="
-                    mb-2
-                    flex
-                    items-start
-                    justify-between
-                    gap-2
-                  ">
+          mb-1
+          flex
+          items-start
+          justify-between
+          gap-1
+        ">
 
                     <h2 className="
-                      line-clamp-2
-                      text-base
-                      font-semibold
-                      text-gray-900
-                    ">
+            line-clamp-2
+            text-xs
+            font-semibold
+            text-gray-900
+          ">
                       {course.title}
                     </h2>
 
                     <span className="
-                      shrink-0
-                      rounded-full
-                      bg-gray-100
-                      px-2
-                      py-1
-                      text-xs
-                      capitalize
-                      text-gray-600
-                    ">
+            shrink-0
+            rounded-full
+            bg-gray-100
+            px-1.5
+            py-0.5
+            text-[10px]
+            capitalize
+            text-gray-600
+          ">
                       {course.level}
                     </span>
 
@@ -263,11 +263,11 @@ const Courses = () => {
 
                   {course.description && (
                     <p className="
-                      mb-4
-                      line-clamp-2
-                      text-sm
-                      text-gray-500
-                    ">
+            mb-2
+            line-clamp-1
+            text-[11px]
+            text-gray-500
+          ">
                       {course.description}
                     </p>
                   )}
@@ -275,31 +275,31 @@ const Courses = () => {
 
                   {/* Footer */}
                   <div className="
-                    flex
-                    items-center
-                    justify-between
-                    border-t
-                    border-gray-100
-                    pt-3
-                  ">
+          flex
+          items-center
+          justify-between
+          border-t
+          border-gray-100
+          pt-1.5
+        ">
 
                     <span className="
-                      rounded-full
-                      bg-gray-100
-                      px-2.5
-                      py-1
-                      text-xs
-                      capitalize
-                      text-gray-600
-                    ">
+            rounded-full
+            bg-gray-100
+            px-1.5
+            py-0.5
+            text-[10px]
+            capitalize
+            text-gray-600
+          ">
                       {course.status}
                     </span>
 
                     <span className="
-                      text-sm
-                      font-medium
-                      text-gray-900
-                    ">
+            text-xs
+            font-medium
+            text-gray-900
+          ">
                       {course.isPaid
                         ? `₹${course.price}`
                         : "Free"}
