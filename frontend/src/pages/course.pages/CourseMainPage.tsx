@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Plus,
+  Plus, Search,
   BookOpen,
   Loader2,
 } from "lucide-react";
@@ -11,7 +11,7 @@ import Button from "../../components/user-interface/Button";
 
 import { getMyCourses, type Course } from "../../configuration/courseConfiguration";
 
-const Courses = () => {
+const CourseMainPage = () => {
   const navigate = useNavigate();
 
   const [courses, setCourses] = useState<Course[]>([]);
@@ -45,21 +45,48 @@ const Courses = () => {
       <div className="mb-6 flex items-center justify-between gap-4">
 
         <div className="min-w-0">
-          <h1 className="truncate text-lg font-semibold text-gray-900 dark:text-white sm:text-xl">
+          <h1 className="truncate text-md  font-bold text-gray-900 dark:text-white ">
             My Courses
           </h1>
 
         </div>
 
 
-        <Button
-          onClick={() => navigate("/courses/create")}
-          size="sm"
-          variant="primary"
-        >
-          <Plus size={15} />
-          Create
-        </Button>
+        <div className="flex items-center gap-2 ">
+          <div className="hidden lg:block">
+            <div className="relative group">
+              <Search
+                size={15}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-zinc-500 transition-colors duration-200 group-focus-within:text-blue-500"
+              />
+              <input
+                placeholder="Search Course..."
+                className="w-full border border-gray-200 dark:border-zinc-800 rounded-full pl-11 pr-4 py-0.5 bg-gray-50/50 dark:bg-zinc-900/50 text-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all shadow-sm"
+              />
+
+            </div>
+          </div>
+
+
+          <Button
+            onClick={() => navigate("/courses/create")}
+            size="sm"
+            className="rounded-full"
+            variant="secondary"
+          >
+            <Plus size={15} />
+            Create
+          </Button>
+
+
+          <Button
+            size="sm"
+            variant="secondary"
+
+          >
+            My Courses
+          </Button>
+        </div>
 
       </div>
 
@@ -179,7 +206,7 @@ const Courses = () => {
               <div
                 key={course.id}
                 onClick={() =>
-                  navigate(`/courses/${course.id}`)
+                  navigate(`/my-course/${course.id}`)
                 }
                 className="
         cursor-pointer
@@ -319,5 +346,5 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default CourseMainPage;
 

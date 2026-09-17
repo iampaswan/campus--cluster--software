@@ -12,7 +12,7 @@ import {
 
 
 
-const CreateCourse = () => {
+const CreateCourseForm = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -99,7 +99,7 @@ const CreateCourse = () => {
       <div className=" flex items-center justify-between gap-3 ">
 
 
-        <h1 className="text-lg font-semibold text-gray-900 dark:text-white sm:text-2xl">
+        <h1 className="text-md font-bold text-gray-900 dark:text-white ">
           Create Course
         </h1>
 
@@ -571,4 +571,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CreateCourseForm;

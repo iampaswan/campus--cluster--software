@@ -44,27 +44,13 @@ export default function Header({ sidebarOpen, setSidebarOpen }: Props) {
             <Menu size={18} />
           </button>
 
-          {/* <div className="lg:hidden">
-            <img
-              src="/chatpulse.png"
-              alt="ChatPulse Logo"
-              width={30}
-              height={30}
-            />
-          </div> */}
+       
         </div>
 
 
 
         <h1 className=" flex items-center">
-          {/* <div className="hidden lg:block">
-            <img
-              src="/chatpulse.png"
-              alt="ChatPulse Logo"
-              width={30}
-              height={30}
-            />
-          </div> */}
+         
           <div className=" text-lg font-bold hidden lg:block">
             <span className="chat-text">Campus</span>
             <span className="pulse-text text-blue-700 dark:text-blue-600">

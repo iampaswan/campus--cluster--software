@@ -32,11 +32,14 @@ export default function Button({
       {...props}
       className={`
       inline-flex
+      border
+      border-gray-200
+      dark:border-gray-700
         items-center
         justify-center
         gap-2
-        rounded-full
-        font-medium
+        rounded-lg
+        font-semibold
         transition
         disabled:cursor-not-allowed
         disabled:opacity-50
