@@ -1,20 +1,18 @@
 import express from "express";
 import { Response, Request } from "express";
 
-const PORT = process.env.PORT
 
 import { AppDataSource } from "./configuration/data-source";
-import cookieParser from "cookie-parser";
 
+import cookieParser from "cookie-parser";
 import courseRouter from "./routes/courseRoute";
 
 import "dotenv/config";
-import { configDotenv } from "dotenv";
 
 import dotenv from 'dotenv'
-
 dotenv.config()
 
+const PORT = process.env.PORT
 
 
 const app = express();
@@ -51,7 +49,6 @@ AppDataSource.initialize()
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Course service is running at port 3001")
-
 })
 
 app.listen(PORT, () => {
