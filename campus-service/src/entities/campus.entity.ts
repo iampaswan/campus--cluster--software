@@ -40,14 +40,14 @@ export class Campus {
   id!: string;
 
   @Index({ unique: true })
-  @Column({ length: 150 })
+  @Column({ type: 'varchar', length: 150 })
   name!: string;
 
   @Index({ unique: true })
-  @Column({ length: 180 })
+  @Column({ type: 'varchar', length: 180 })
   slug!: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   description?: string;
 
   @Column({ type: 'varchar', length: 500, nullable: true })
@@ -77,25 +77,25 @@ export class Campus {
   })
   status!: CampusStatus;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   country?: string;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   state?: string;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   city?: string;
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   address?: string;
 
-  @Column({ length: 150, nullable: true })
+  @Column({ type: 'varchar', length: 150, nullable: true })
   website?: string;
 
-  @Column({ length: 150, nullable: true })
+  @Column({ type: 'varchar', length: 150, nullable: true })
   email?: string;
 
-  @Column({ length: 30, nullable: true })
+  @Column({ type: 'varchar', length: 30, nullable: true })
   phone?: string;
 
   /**

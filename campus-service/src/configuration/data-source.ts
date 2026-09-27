@@ -1,5 +1,5 @@
+import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-
 
 import { Campus } from '../entities/campus.entity';
 
