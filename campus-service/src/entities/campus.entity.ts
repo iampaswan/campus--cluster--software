@@ -37,15 +37,15 @@ export enum CampusStatus {
 @Entity('campuses')
 export class Campus {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Index({ unique: true })
   @Column({ length: 150 })
-  name: string;
+  name!: string;
 
   @Index({ unique: true })
   @Column({ length: 180 })
-  slug: string;
+  slug!: string;
 
   @Column({ type: 'text', nullable: true })
   description?: string;
@@ -61,21 +61,21 @@ export class Campus {
     enum: CampusType,
     default: CampusType.OTHER,
   })
-  type: CampusType;
+  type!: CampusType;
 
   @Column({
     type: 'enum',
     enum: CampusVisibility,
     default: CampusVisibility.PUBLIC,
   })
-  visibility: CampusVisibility;
+  visibility!: CampusVisibility;
 
   @Column({
     type: 'enum',
     enum: CampusStatus,
     default: CampusStatus.ACTIVE,
   })
-  status: CampusStatus;
+  status!: CampusStatus;
 
   @Column({ length: 100, nullable: true })
   country?: string;
@@ -106,14 +106,14 @@ export class Campus {
    */
   @Index()
   @Column({ type: 'uuid' })
-  ownerId: string;
+  ownerId!: string;
 
   @Column({ type: 'boolean', default: false })
-  isVerified: boolean;
+  isVerified!: boolean;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }
