@@ -12,6 +12,8 @@ import { authenticateJWT } from "./middlewares/authenticateMid";
 const FRONTEND_URL = process.env.FRONTEND_URL
 const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL as string
 const COURSE_SERVICE_URL = process.env.COURSE_SERVICE_URL as string
+const CAMPUS_SERVICE_URL = process.env.CAMPUS_SERVICE_URL as string
+
 
 const app = express()
 app.use(cors({
@@ -52,6 +54,15 @@ app.post('/course/create', authenticateJWT, (req: Request, res: Response, next: 
 })
 app.get('/course/my', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
   courseServiceProxy(req, res, next)
+})
+
+
+const campusServiceProxy = proxy(CAMPUS_SERVICE_URL)
+app.post('/campus', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
+  campusServiceProxy(req, res, next)
+})
+app.get('/campus', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
+  campusServiceProxy(req, res, next)
 })
 
 
