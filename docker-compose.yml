@@ -1,0 +1,103 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: campuscluster
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d campuscluster"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  authservice:
+    build:
+      context: ./authservice
+    restart: unless-stopped
+    env_file:
+      - ./authservice/.env
+    environment:
+      PORT: 3001
+      FRONTEND_URL: http://localhost:8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DB_NAME: campuscluster
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  course-service:
+    build:
+      context: ./course-service
+    restart: unless-stopped
+    env_file:
+      - ./course-service/.env
+    environment:
+      PORT: 3002
+      FRONTEND_URL: http://localhost:8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DB_NAME: campuscluster
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  campus-service:
+    build:
+      context: ./campus-service
+    restart: unless-stopped
+    env_file:
+      - ./campus-service/.env
+    environment:
+      PORT: 3003
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DB_NAME: campuscluster
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  gateway:
+    build:
+      context: ./gateway
+    restart: unless-stopped
+    env_file:
+      - ./gateway/.env
+    environment:
+      PORT: 9000
+      FRONTEND_URL: http://localhost:8080
+      AUTH_SERVICE_URL: http://authservice:3001
+      COURSE_SERVICE_URL: http://course-service:3002
+      CAMPUS_SERVICE_URL: http://campus-service:3003
+    ports:
+      - "9000:9000"
+    depends_on:
+      - authservice
+      - course-service
+      - campus-service
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_GATEWAY_URL: ${VITE_GATEWAY_URL:-http://localhost:9000}
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - gateway
+
+volumes:
+  postgres-data:

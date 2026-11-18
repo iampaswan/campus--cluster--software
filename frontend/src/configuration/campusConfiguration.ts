@@ -10,15 +10,19 @@ import type {
 
 
 
-// Create campus
-export const createCampus = (
-  data: CreateCampusPayload
-) => {
-  return apiClient.post<{
+export const createCampus = (data: CreateCampusPayload) => {
+  return apiClient.post<{ success: boolean; message: string; data: Campus; }>("/campus", data);
+};
+
+
+
+// Get campuses created by the logged-in user
+export const getMyCampuses = () => {
+  return apiClient.get<{
     success: boolean;
     message: string;
-    data: Campus;
-  }>("/campuses", data);
+    data: Campus[];
+  }>("/campus/my");
 };
 
 // Get public campuses
@@ -31,16 +35,7 @@ export const getCampuses = (params?: {
     success: boolean;
     message: string;
     data: CampusListResponse;
-  }>("/campuses", { params });
-};
-
-// Get campuses created by the logged-in user
-export const getMyCampuses = () => {
-  return apiClient.get<{
-    success: boolean;
-    message: string;
-    data: Campus[];
-  }>("/campuses/my");
+  }>("/campus", { params });
 };
 
 // Get campus by ID
@@ -49,7 +44,7 @@ export const getCampusById = (id: string) => {
     success: boolean;
     message: string;
     data: Campus;
-  }>(`/campuses/${id}`);
+  }>(`/campuse/${id}`);
 };
 
 // Get campus by slug
@@ -58,7 +53,7 @@ export const getCampusBySlug = (slug: string) => {
     success: boolean;
     message: string;
     data: Campus;
-  }>(`/campuses/slug/${slug}`);
+  }>(`/campus/slug/${slug}`);
 };
 
 // Update campus
@@ -70,7 +65,7 @@ export const updateCampus = (
     success: boolean;
     message: string;
     data: Campus;
-  }>(`/campuses/${id}`, data);
+  }>(`/campus/${id}`, data);
 };
 
 // Archive campus
@@ -79,5 +74,5 @@ export const deleteCampus = (id: string) => {
     success: boolean;
     message: string;
     data: { message: string };
-  }>(`/campuses/${id}`);
+  }>(`/campus/${id}`);
 };

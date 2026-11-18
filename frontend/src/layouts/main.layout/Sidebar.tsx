@@ -27,8 +27,8 @@ const links = [
   { name: "Users", path: "/users", icon: Users },
   { name: "Explore Courses", path: "/explore-courses", icon: CopyIcon },
   { name: "Courses", path: "/my-courses", icon: CopyPlusIcon },
-  { name: "Explore Campus", path: "/campuse", icon: Building2Icon },
-  { name: "Create Campus", path: "/my-campus", icon: LucideHousePlus },
+  { name: "Explore Campus", path: "/explore-campus", icon: Building2Icon },
+  { name: "Campus", path: "/my-campus", icon: LucideHousePlus },
 
 
 

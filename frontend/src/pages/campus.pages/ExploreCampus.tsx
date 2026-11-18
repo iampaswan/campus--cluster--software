@@ -1,15 +1,23 @@
 
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getCampuses } from "../../configuration/campusConfiguration";
+import {
+  getCampuses,
+  getMyCampuses,
+} from "../../configuration/campusConfiguration";
 import type { Campus } from "../../types/campus";
+import CampusCard from "./CampusCard";
+import Button from "../../components/user-interface/Button";
 
 export default function ExploreCampuses() {
-  const navigate = useNavigate();
 
   const [campuses, setCampuses] = useState<Campus[]>([]);
   const [myCampusIds, setMyCampusIds] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [typeFilter, setTypeFilter] = useState("");
+  const [countryFilter, setCountryFilter] = useState("");
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [sortOrder, setSortOrder] = useState<"name" | "recent">("name");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -24,13 +32,14 @@ export default function ExploreCampuses() {
         // Load public campuses and the current user's campuses.
         const [publicResponse, myResponse] = await Promise.all([
           getCampuses({ page: 1, limit: 100 }),
-          getCampuses().catch(() => null),
+
+          getMyCampuses().catch(() => null),
         ]);
 
         if (!active) return;
 
         const publicData = publicResponse.data.data;
-        const ownedCampuses = myResponse?.data.data.data ?? [];
+        const ownedCampuses = myResponse?.data.data ?? [];
 
         setCampuses(publicData.data ?? []);
         setMyCampusIds(
@@ -56,9 +65,12 @@ export default function ExploreCampuses() {
   const filteredCampuses = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    return campuses.filter((campus) => {
+    const results = campuses.filter((campus) => {
       // Hide campuses created by the current user.
       if (myCampusIds.has(campus.id)) return false;
+      if (typeFilter && campus.type !== typeFilter) return false;
+      if (countryFilter && campus.country !== countryFilter) return false;
+      if (verifiedOnly && !campus.isVerified) return false;
 
       if (!query) return true;
 
@@ -73,13 +85,21 @@ export default function ExploreCampuses() {
         .filter(Boolean)
         .some((value) => String(value).toLowerCase().includes(query));
     });
-  }, [campuses, myCampusIds, search]);
+
+    return results.sort((a, b) => sortOrder === "name"
+      ? a.name.localeCompare(b.name)
+      : b.createdAt.localeCompare(a.createdAt));
+  }, [campuses, myCampusIds, search, typeFilter, countryFilter, verifiedOnly, sortOrder]);
+
+  const campusTypes = [...new Set(campuses.map((campus) => campus.type))].sort();
+  const countries = [...new Set(campuses.map((campus) => campus.country).filter((country): country is string => Boolean(country)))].sort();
+  const activeFilterCount = Number(Boolean(typeFilter)) + Number(Boolean(countryFilter)) + Number(verifiedOnly) + Number(sortOrder !== "name");
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section className="">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="truncate text-md  font-bold text-gray-900 dark:text-white ">
             Explore Campuses
           </h1>
           <p className="mt-2 text-gray-600">
@@ -87,25 +107,46 @@ export default function ExploreCampuses() {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => navigate("/campuses/my")}
-          className="rounded-lg border border-gray-300 px-4 py-2.5 font-medium text-gray-700 hover:bg-gray-50"
-        >
-          My Campuses
-        </button>
+
+        <div className="relative mb-6">
+          <div className="flex gap-2">
+            <input
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Search campuses..."
+              aria-label="Search campuses"
+              className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+            />
+            <Button size="sm" variant="secondary" type="button" aria-expanded={filterOpen} onClick={() => setFilterOpen((open) => !open)}>
+              Filter{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
+            </Button>
+          </div>
+
+          {filterOpen && <div className="absolute right-0 z-10 mt-2 grid w-full gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-lg sm:w-80 dark:border-gray-700 dark:bg-gray-900">
+            <label className="grid gap-1 text-sm font-medium text-gray-700 dark:text-gray-200">Campus type
+              <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)} className="rounded-lg border border-gray-300 bg-white px-3 py-2 font-normal dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                <option value="">All types</option>{campusTypes.map((type) => <option key={type} value={type}>{type.replaceAll("_", " ")}</option>)}
+              </select>
+            </label>
+            <label className="grid gap-1 text-sm font-medium text-gray-700 dark:text-gray-200">Country
+              <select value={countryFilter} onChange={(event) => setCountryFilter(event.target.value)} className="rounded-lg border border-gray-300 bg-white px-3 py-2 font-normal dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                <option value="">All countries</option>{countries.map((country) => <option key={country} value={country}>{country}</option>)}
+              </select>
+            </label>
+            <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200"><input type="checkbox" checked={verifiedOnly} onChange={(event) => setVerifiedOnly(event.target.checked)} /> Verified campuses only</label>
+            <label className="grid gap-1 text-sm font-medium text-gray-700 dark:text-gray-200">Sort by
+              <select value={sortOrder} onChange={(event) => setSortOrder(event.target.value as "name" | "recent")} className="rounded-lg border border-gray-300 bg-white px-3 py-2 font-normal dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+                <option value="name">Name</option><option value="recent">Recently added</option>
+              </select>
+            </label>
+            <button type="button" onClick={() => { setTypeFilter(""); setCountryFilter(""); setVerifiedOnly(false); setSortOrder("name"); }} className="justify-self-start text-sm font-medium text-blue-600 hover:underline">Clear filters</button>
+          </div>}
+        </div>
+
       </div>
 
-      <div className="mb-6">
-        <input
-          type="search"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search by campus name, city, or type..."
-          aria-label="Search campuses"
-          className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-        />
-      </div>
+
 
       {loading && (
         <p className="py-12 text-center text-gray-500">
@@ -138,73 +179,8 @@ export default function ExploreCampuses() {
       )}
 
       {!loading && !error && filteredCampuses.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredCampuses.map((campus) => (
-            <article
-              key={campus.id}
-              className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-            >
-              {campus.bannerUrl ? (
-                <img
-                  src={campus.bannerUrl}
-                  alt={`${campus.name} banner`}
-                  className="h-36 w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-36 items-center justify-center bg-gradient-to-r from-blue-100 to-indigo-100">
-                  <span className="text-4xl font-bold text-blue-700">
-                    {campus.name.charAt(0).toUpperCase()}
-                  </span>
-                </div>
-              )}
-
-              <div className="p-5">
-                <div className="mb-3 flex items-start gap-3">
-                  {campus.logoUrl ? (
-                    <img
-                      src={campus.logoUrl}
-                      alt={`${campus.name} logo`}
-                      className="h-12 w-12 rounded-lg border border-gray-200 object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-lg font-bold text-gray-600">
-                      {campus.name.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-
-                  <div className="min-w-0 flex-1">
-                    <h2 className="truncate text-lg font-semibold text-gray-900">
-                      {campus.name}
-                    </h2>
-                    <p className="text-sm text-gray-500">
-                      {campus.type.replaceAll("_", " ")}
-                    </p>
-                  </div>
-                </div>
-
-                <p className="mb-4 line-clamp-3 min-h-[4.5rem] text-sm text-gray-600">
-                  {campus.description || "No description available yet."}
-                </p>
-
-                {(campus.city || campus.state || campus.country) && (
-                  <p className="mb-4 text-sm text-gray-500">
-                    <span aria-hidden="true">📍 </span>
-                    {[campus.city, campus.state, campus.country]
-                      .filter(Boolean)
-                      .join(", ")}
-                  </p>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => navigate(`/campuses/${campus.slug}`)}
-                  className="w-full rounded-lg bg-blue-600 px-4 py-2.5 font-medium text-white hover:bg-blue-700"
-                >
-                  View Campus
-                </button>
-              </div>
-            </article>
-          ))}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredCampuses.map((campus) => <CampusCard key={campus.id} campus={campus} variant="owned" />)}
         </div>
       )}
     </section>

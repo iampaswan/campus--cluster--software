@@ -14,6 +14,8 @@ import CreateCourseForm from "../pages/course.pages/CreateCourseForm";
 import MyCourseDetails from "../pages/course.pages/MyCourseDetails";
 
 import MyCampus from "../pages/campus.pages/MyCampus";
+import ExploreCampuses from "../pages/campus.pages/ExploreCampus";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -35,6 +37,7 @@ export default function AppRoutes() {
           <Route path="/my-course/:id" element={<MyCourseDetails />} />
 
           <Route path="/my-campus" element={<MyCampus />} />
+          <Route path="/explore-campus" element={<ExploreCampuses />} />
 
         </Route>
       </Route>

@@ -25,6 +25,11 @@ import {
   Video,
 } from "lucide-react";
 
+import { useSelector, } from "react-redux";
+import type { RootState } from "../../store/store";
+
+
+
 const stats = [
   {
     label: "Courses Learning",
@@ -170,6 +175,7 @@ const recommended = [
 ];
 
 export default function Dashboard() {
+  const { user } = useSelector((state: RootState) => state.auth);
   return (
     <div className="min-h-screen text-slate-800">
 
@@ -179,11 +185,9 @@ export default function Dashboard() {
 
           <div>
             <h1 className="text-lg font-semibold text-slate-900">
-              Hii, Krishna Kumar Paswan
+              Hii, {user?.name}
             </h1>
-            <p className="text-xs text-slate-400">
-              Welcome back, Continue your learning journey.
-            </p>
+
           </div>
 
           <div className="flex items-center gap-3">

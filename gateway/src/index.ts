@@ -61,6 +61,10 @@ const campusServiceProxy = proxy(CAMPUS_SERVICE_URL)
 app.post('/campus', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
   campusServiceProxy(req, res, next)
 })
+
+app.get('/campus/my', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
+  campusServiceProxy(req, res, next)
+})
 app.get('/campus', authenticateJWT, (req: Request, res: Response, next: NextFunction) => {
   campusServiceProxy(req, res, next)
 })

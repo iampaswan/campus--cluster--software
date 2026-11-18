@@ -13,39 +13,15 @@ import {
 const campusRouter = Router();
 
 
-// Create campus
-campusRouter.post(
-  "/",
-  createCampusController
-);
+campusRouter.post("/", createCampusController);
 
+campusRouter.get("/my", getMyCampusesController);
 
-// Get public campuses
-campusRouter.get(
-  "/",
-  getCampusesController
-);
+campusRouter.get("/", getCampusesController);
 
+campusRouter.get("/slug/:slug",getCampusBySlugController);
 
-// Get campuses created by current user
-campusRouter.get(
-  "/my",
-  getMyCampusesController
-);
-
-
-// Get campus by slug
-campusRouter.get(
-  "/slug/:slug",
-  getCampusBySlugController
-);
-
-
-// Get campus by ID
-campusRouter.get(
-  "/:id",
-  getCampusByIdController
-);
+campusRouter.get( "/:id", getCampusByIdController);
 
 
 // Update campus

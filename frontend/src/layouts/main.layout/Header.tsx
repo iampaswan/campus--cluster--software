@@ -2,7 +2,7 @@ import { useSelector, useDispatch, } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
 import { logout } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
-import { Power, Menu, Search, Bell, ChevronDown, User, CircleHelp, Settings } from "lucide-react";
+import { Power, Menu, Bell, ChevronDown, User, CircleHelp, Settings } from "lucide-react";
 import { ThemeToggle } from "../../utils/theme-toggle";
 import { useState } from "react";
 
@@ -44,13 +44,13 @@ export default function Header({ sidebarOpen, setSidebarOpen }: Props) {
             <Menu size={18} />
           </button>
 
-       
+
         </div>
 
 
 
         <h1 className=" flex items-center">
-         
+
           <div className=" text-lg font-bold hidden lg:block">
             <span className="chat-text">Campus</span>
             <span className="pulse-text text-blue-700 dark:text-blue-600">
@@ -77,7 +77,7 @@ export default function Header({ sidebarOpen, setSidebarOpen }: Props) {
           </button>
 
           {/* global search */}
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <div className="relative group">
               <Search
                 size={15}
@@ -89,7 +89,7 @@ export default function Header({ sidebarOpen, setSidebarOpen }: Props) {
               />
 
             </div>
-          </div>
+          </div> */}
 
 
 

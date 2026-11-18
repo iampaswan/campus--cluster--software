@@ -17,6 +17,7 @@ import type {
 } from "../../types/campus";
 
 interface Props {
+  open: boolean;
   campus?: Campus | null;
   onClose: () => void;
   onSaved: (campus: Campus) => void;
@@ -34,6 +35,7 @@ const emptyForm: CreateCampusPayload = {
 };
 
 export default function CampusFormModal({
+  open,
   campus,
   onClose,
   onSaved,
@@ -87,6 +89,8 @@ export default function CampusFormModal({
   ) => {
     setForm((current) => ({ ...current, [field]: value }));
   };
+
+  if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/50 p-4">
