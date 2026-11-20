@@ -11,10 +11,11 @@ import { useState } from "react";
 type Props = {
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  showMenu?: boolean;
 };
 
 
-export default function Header({ sidebarOpen, setSidebarOpen }: Props) {
+export default function Header({ sidebarOpen, setSidebarOpen, showMenu = true }: Props) {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -36,7 +37,7 @@ export default function Header({ sidebarOpen, setSidebarOpen }: Props) {
       <div className="flex flex-row justify-between items-center dark:text-white px-3  w-full text-center border-dark:border-b-white">
 
         {/* Mobile Menu */}
-        <div className="flex lg:hidden ">
+        <div className={`flex lg:hidden ${showMenu ? "" : "invisible"}`}>
           <button
             className="lg:hidden rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
             onClick={() => setSidebarOpen(!sidebarOpen)}

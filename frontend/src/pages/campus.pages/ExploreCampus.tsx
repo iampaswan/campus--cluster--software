@@ -7,6 +7,7 @@ import {
 import type { Campus } from "../../types/campus";
 import CampusCard from "./CampusCard";
 import Button from "../../components/user-interface/Button";
+import SearchInput from "../../components/user-interface/SearchInput";
 
 export default function ExploreCampuses() {
 
@@ -102,7 +103,7 @@ export default function ExploreCampuses() {
           <h1 className="truncate text-md  font-bold text-gray-900 dark:text-white ">
             Explore Campuses
           </h1>
-          <p className="mt-2 text-gray-600">
+          <p className=" text-gray-600 text-xs">
             Discover schools, colleges, universities, and learning communities.
           </p>
         </div>
@@ -110,13 +111,12 @@ export default function ExploreCampuses() {
 
         <div className="relative mb-6">
           <div className="flex gap-2">
-            <input
-              type="search"
+            <SearchInput
+              size="sm"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search campuses..."
               aria-label="Search campuses"
-              className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
             />
             <Button size="sm" variant="secondary" type="button" aria-expanded={filterOpen} onClick={() => setFilterOpen((open) => !open)}>
               Filter{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}

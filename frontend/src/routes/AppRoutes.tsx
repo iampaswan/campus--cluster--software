@@ -15,6 +15,7 @@ import MyCourseDetails from "../pages/course.pages/MyCourseDetails";
 
 import MyCampus from "../pages/campus.pages/MyCampus";
 import ExploreCampuses from "../pages/campus.pages/ExploreCampus";
+import ManageMyCampus from "../pages/campus.pages/MyCampusManagement/ManageMyCampus";
 
 export default function AppRoutes() {
   return (
@@ -38,6 +39,7 @@ export default function AppRoutes() {
 
           <Route path="/my-campus" element={<MyCampus />} />
           <Route path="/explore-campus" element={<ExploreCampuses />} />
+          <Route path="/campus-management" element={<ManageMyCampus />} />
 
         </Route>
       </Route>
